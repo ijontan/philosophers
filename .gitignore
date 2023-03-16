@@ -1,0 +1,5 @@
+*.o
+*.out
+philo
+philo_bonus
+debug.out.dSYM
