@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/16 18:47:42 by itan             ###   ########.fr        #
+#    Updated: 2023/03/16 18:52:16 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CFLAGS	= -Wall -Werror -Wextra
 RM		= rm -f
 INC		= $(addprefix -I , $(shell find includes -type d -name includes))
 
-LIBDIR	= includes/libft
+LIBDIR	= ../libft
 LIB		= -L$(LIBDIR) -lft
 LIBNAME	= libft.a
 # this is for debugging
