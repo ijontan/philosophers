@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/16 18:52:16 by itan             ###   ########.fr        #
+#    Updated: 2023/03/17 18:48:47 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ AR		= ar -rcs
 CC		= gcc
 CFLAGS	= -Wall -Werror -Wextra
 RM		= rm -f
-INC		= $(addprefix -I , $(shell find includes -type d -name includes))
+INC		= $(addprefix -I , $(shell find ../ -type d -name includes))
 
 LIBDIR	= ../libft
 LIB		= -L$(LIBDIR) -lft

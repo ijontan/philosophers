@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/16 18:52:11 by itan             ###   ########.fr        #
+#    Updated: 2023/03/17 18:48:55 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ AR		= ar -rcs
 CC		= gcc
 CFLAGS	= -Wall -Werror -Wextra
 RM		= rm -f
-INC		= $(addprefix -I , $(shell find includes -type d -name includes))
+INC		= $(addprefix -I , $(shell find ../ -type d -name includes))
 
 LIBDIR	= ../libft
 LIB		= -L$(LIBDIR) -lft
@@ -33,7 +33,7 @@ LIBNAME	= libft.a
 # this is for debugging
 DNAME	= debug.out
 # DDIR	= test
-DFLAGS	= -fsanitize=address -fdiagnostics-color=always -g3
+DFLAGS	= -fsanitize=thread -fdiagnostics-color=always -g3
 # DSRC	= $(shell find $(DDIR) -name '*.c')
 DOBJ	= $(DSRC:.c=.o)
 
