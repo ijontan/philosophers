@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*   print_dead.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/17 17:33:34 by itan              #+#    #+#             */
-/*   Updated: 2023/03/18 01:26:12 by itan             ###   ########.fr       */
+/*   Created: 2023/03/18 03:09:09 by itan              #+#    #+#             */
+/*   Updated: 2023/03/18 04:01:49 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_BONUS_H
-# define PHILO_BONUS_H
+#include "philo.h"
 
-
-#endif
+void	philo_dead(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->data->print));
+	printf("%07li:%i has died, he's been a great philosopher ",
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id);
+	printf("and he will always be in our heart.\n");
+	pthread_mutex_unlock(&(philo->data->print));
+}
