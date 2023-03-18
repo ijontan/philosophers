@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:00:01 by itan              #+#    #+#             */
-/*   Updated: 2023/03/18 03:57:35 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/18 17:38:41 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <stdio.h>
 # include <sys/time.h>
 
+# ifndef PRETTY
+#  define PRETTY 0
+# endif
+
 typedef struct s_philo_data
 {
 	int				sleep_ms;
@@ -25,6 +29,7 @@ typedef struct s_philo_data
 	int				die_time_ms;
 	int				num_of_philo;
 	bool			someone_died;
+	pthread_mutex_t	m_someone_died;
 	struct timeval	start_time;
 	pthread_t		*thread;
 	pthread_mutex_t	*forks;
@@ -39,6 +44,7 @@ typedef struct s_philo
 	struct timeval	last_eat;
 	struct timeval	current_time;
 	bool			is_dead;
+	pthread_mutex_t	read_dead;
 	t_philo_data	*data;
 }					t_philo;
 

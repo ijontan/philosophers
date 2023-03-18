@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/18 01:41:56 by itan             ###   ########.fr        #
+#    Updated: 2023/03/18 17:56:56 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,10 @@ $(LIBDIR)/$(LIBNAME):
 debug:	$(DNAME)
 
 all:	$(NAME)
+
+pretty::	CFLAGS+=-D PRETTY=true
+
+pretty::	all
 
 clean:
 		@printf "$(RED)$(BRIGHT)Removing $(NAME) objects...\n$(NORMAL)"

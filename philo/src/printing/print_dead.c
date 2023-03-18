@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 03:09:09 by itan              #+#    #+#             */
-/*   Updated: 2023/03/18 04:01:49 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/18 18:02:08 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,17 @@
 void	philo_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->print));
-	printf("%07li:%i has died, he's been a great philosopher ",
-			get_time_diff(philo->data->start_time, philo->current_time),
-			philo->id);
-	printf("and he will always be in our heart.\n");
+	if (PRETTY)
+	{
+		printf("%07li %i%s has died, he's been a great philosopher ",
+				get_time_diff(philo->data->start_time, philo->current_time),
+				philo->id,
+				"\033[1;31m");
+		printf("and he will always be in our heart.%s\n", "\033[0m");
+	}
+	else
+		printf("%07li %i has died\n",
+				get_time_diff(philo->data->start_time, philo->current_time),
+				philo->id);
 	pthread_mutex_unlock(&(philo->data->print));
 }
