@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:00:01 by itan              #+#    #+#             */
-/*   Updated: 2023/03/18 17:38:41 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 00:29:55 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ typedef struct s_philo_data
 	int				sleep_ms;
 	int				eat_ms;
 	int				die_time_ms;
+	int				max_eat_count;
 	int				num_of_philo;
-	bool			someone_died;
+	bool			all_shall_stop;
 	pthread_mutex_t	m_someone_died;
 	struct timeval	start_time;
 	pthread_t		*thread;
@@ -41,7 +42,9 @@ typedef struct s_philo
 {
 	int				id;
 	int				eat_count;
+	pthread_mutex_t	read_eat_count;
 	struct timeval	last_eat;
+	pthread_mutex_t	read_last_eat;
 	struct timeval	current_time;
 	bool			is_dead;
 	pthread_mutex_t	read_dead;
@@ -57,7 +60,15 @@ void				philo_think(t_philo *philo);
 void				philo_dead(t_philo *philo);
 /* --------------------------------- routine -------------------------------- */
 void				*routine(void *val);
+/* ------------------------------ setup_setdown ----------------------------- */
+void				philo_data_init(t_philo_data *data, int ac,
+						char const **av);
+void				create_philosophers(t_philo_data *data);
+void				create_threads(t_philo_data *data);
+
+void				join_all(t_philo_data *data);
+void				destroy_all(t_philo_data *data);
 /* ---------------------------------- time ---------------------------------- */
-long int			get_time_diff(struct timeval start, struct timeval end);
+int					get_time_diff(struct timeval start, struct timeval end);
 
 #endif

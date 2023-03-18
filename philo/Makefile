@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/18 17:56:56 by itan             ###   ########.fr        #
+#    Updated: 2023/03/19 01:33:14 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ LIBNAME	= libft.a
 # this is for debugging
 DNAME	= debug.out
 # DDIR	= test
-DFLAGS	= -fsanitize=address -fdiagnostics-color=always -g3
+DFLAGS	= -fsanitize=thread -fdiagnostics-color=always -g3
 # DSRC	= $(shell find $(DDIR) -name '*.c')
 DOBJ	= $(DSRC:.c=.o)
 

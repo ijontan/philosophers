@@ -6,86 +6,91 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:59:27 by itan              #+#    #+#             */
-/*   Updated: 2023/03/18 17:23:46 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 02:51:50 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char const **av)
+static bool	check_dead(t_philo *philo)
 {
-	int				i;
-	t_philo_data	data;
+	struct timeval	current_time;
+	struct timeval	last_eat;
 
-	if (ac != 5)
-		return (1);
-	data.num_of_philo = ft_atoi(av[1]);
-	data.die_time_ms = ft_atoi(av[2]);
-	data.eat_ms = ft_atoi(av[3]);
-	data.sleep_ms = ft_atoi(av[4]);
-	data.thread = ft_calloc(data.num_of_philo, sizeof(pthread_t));
-	data.forks = ft_calloc(data.num_of_philo, sizeof(pthread_mutex_t));
-	data.philos = ft_calloc(data.num_of_philo, sizeof(t_philo));
-	data.someone_died = false;
-	pthread_mutex_init(&data.print, NULL);
-	pthread_mutex_init(&data.m_someone_died, NULL);
-	gettimeofday(&data.start_time, NULL);
-	i = 0;
-	while (i < data.num_of_philo)
+	gettimeofday(&current_time, NULL);
+	pthread_mutex_lock(&philo->read_last_eat);
+	last_eat = philo->last_eat;
+	pthread_mutex_unlock(&philo->read_last_eat);
+	if (get_time_diff(last_eat, current_time) > philo->data->die_time_ms)
 	{
-		data.philos[i].id = i;
-		data.philos[i].data = &data;
-		data.philos[i].eat_count = 0;
-		data.philos[i].is_dead = false;
-		gettimeofday(&data.philos[i].last_eat, NULL);
-		pthread_mutex_init(&data.philos[i].read_dead, NULL);
-		ft_printf("philo %d: %p\n", data.philos[i].id, &data.philos[i]);
-		i++;
+		pthread_mutex_lock(&philo->read_dead);
+		philo->is_dead = true;
+		pthread_mutex_unlock(&philo->read_dead);
+		pthread_mutex_lock(&philo->data->m_someone_died);
+		philo->data->all_shall_stop = true;
+		pthread_mutex_unlock(&philo->data->m_someone_died);
+		philo_dead(philo);
+		return (true);
 	}
-	i = 0;
-	while (i < data.num_of_philo)
-		pthread_mutex_init(&data.forks[i++], NULL);
-	i = 0;
-	while (i < data.num_of_philo)
-	{
-		pthread_create(&data.thread[i], NULL, routine, &data.philos[i]);
-		i++;
-	}
-	pthread_mutex_lock(&data.m_someone_died);
-	while (data.someone_died)
+	return (false);
+}
+
+static bool	check_eat_count(t_philo *philo)
+{
+	int	eat_count;
+
+	pthread_mutex_lock(&philo->read_eat_count);
+	eat_count = philo->eat_count;
+	pthread_mutex_unlock(&philo->read_eat_count);
+	if (eat_count == philo->data->max_eat_count)
+		return (true);
+	return (false);
+}
+
+static bool	stop_all(t_philo_data *data)
+{
+	pthread_mutex_lock(&data->m_someone_died);
+	data->all_shall_stop = true;
+	pthread_mutex_unlock(&data->m_someone_died);
+	return (true);
+}
+
+bool	check_routine(t_philo_data *data)
+{
+	int	i;
+	int	finished_eating;
+
+	finished_eating = 0;
+	while (1)
 	{
 		i = 0;
-		while (i < data.num_of_philo)
+		while (i < data->num_of_philo)
 		{
-			pthread_mutex_lock(&data.philos[i].read_dead);
-			if (data.philos[i].is_dead)
-			{
-				data.someone_died = true;
-				pthread_mutex_unlock(&data.philos[i].read_dead);
-				break ;
-			}
-			pthread_mutex_unlock(&data.philos[i].read_dead);
+			if (check_dead(&data->philos[i]))
+				return (true);
+			if (data->max_eat_count != -1 && check_eat_count(&data->philos[i]))
+				finished_eating++;
 			i++;
 		}
-		pthread_mutex_unlock(&data.m_someone_died);
-		usleep(1000);
-		pthread_mutex_lock(&data.m_someone_died);
+		if (finished_eating == data->num_of_philo)
+			return (stop_all(data));
+		finished_eating = 0;
+		usleep(900);
 	}
-	pthread_mutex_unlock(&data.m_someone_died);
-	i = 0;
-	while (i < data.num_of_philo)
-	{
-		pthread_join(data.thread[i++], NULL);
-		pthread_mutex_destroy(&data.philos[i].read_dead);
-	}
-	i = 0;
-	while (i < data.num_of_philo)
-		pthread_mutex_destroy(&data.forks[i++]);
-	pthread_mutex_destroy(&data.print);
-	pthread_mutex_destroy(&data.m_someone_died);
-	i = 0;
-	free(data.thread);
-	free(data.forks);
-	free(data.philos);
+	return (false);
+}
+
+int	main(int ac, char const **av)
+{
+	t_philo_data	data;
+
+	if (ac != 5 && ac != 6)
+		return (1);
+	philo_data_init(&data, ac, av);
+	create_philosophers(&data);
+	create_threads(&data);
+	check_routine(&data);
+	join_all(&data);
+	destroy_all(&data);
 	return (0);
 }
