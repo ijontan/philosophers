@@ -6,11 +6,11 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/17 18:48:47 by itan             ###   ########.fr        #
+#    Updated: 2023/03/19 23:44:16 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= philo
+NAME	= philo_bonus
 
 SRC_DIR	= src
 OBJ_DIR	= obj
@@ -27,9 +27,7 @@ CFLAGS	= -Wall -Werror -Wextra
 RM		= rm -f
 INC		= $(addprefix -I , $(shell find ../ -type d -name includes))
 
-LIBDIR	= ../libft
-LIB		= -L$(LIBDIR) -lft
-LIBNAME	= libft.a
+
 # this is for debugging
 DNAME	= debug.out
 # DDIR	= test
@@ -70,14 +68,14 @@ $(DDIR)/%.o:	$(DDIR)/%.c
 				@printf "$(YELLOW)$(BRIGHT)Generating %25s\t$(NORMAL)%40s\r" "$(NAME) debug objects..." $@
 				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-$(NAME)::	$(LIBDIR)/$(LIBNAME) $(OBJ) 
+$(NAME)::	$(OBJ) 
 			@printf "\n$(MAGENTA)$(BRIGHT)Compiling $(NAME)...          \n"
-			@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $(NAME) $(LIB)
+			@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $(NAME)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
-$(DNAME):	$(SRC) $(DSRC) $(LIBDIR)/$(LIBNAME)
+$(DNAME):	$(SRC) $(DSRC)
 			@printf "\n$(MAGENTA)Compiling $(DNAME) for $(NAME)...          \n"
-			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(SRC) $(DSRC) -o $(DNAME) $(LIB) 
+			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(SRC) $(DSRC) -o $(DNAME)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
 $(LIBDIR)/$(LIBNAME):
@@ -85,7 +83,11 @@ $(LIBDIR)/$(LIBNAME):
 
 debug:	$(DNAME)
 
-all:	$(NAME)
+all::	$(NAME)
+
+pretty::	CFLAGS+=-D PRETTY=true
+
+pretty::	all
 
 clean:
 		@printf "$(RED)$(BRIGHT)Removing $(NAME) objects...\n$(NORMAL)"
