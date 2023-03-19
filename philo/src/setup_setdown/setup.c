@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 23:28:56 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 00:50:04 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 14:33:25 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	philo_data_init(t_philo_data *data, int ac, char const **av)
 	data->philos = ft_calloc(data->num_of_philo, sizeof(t_philo));
 	data->all_shall_stop = false;
 	pthread_mutex_init(&data->print, NULL);
-	pthread_mutex_init(&data->m_someone_died, NULL);
+	pthread_mutex_init(&data->read_all_shall_stop, NULL);
 }
 
 void	create_philosophers(t_philo_data *data)

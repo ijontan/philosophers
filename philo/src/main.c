@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:59:27 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 02:51:50 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 14:37:05 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static bool	check_dead(t_philo *philo)
 		pthread_mutex_lock(&philo->read_dead);
 		philo->is_dead = true;
 		pthread_mutex_unlock(&philo->read_dead);
-		pthread_mutex_lock(&philo->data->m_someone_died);
+		pthread_mutex_lock(&philo->data->read_all_shall_stop);
 		philo->data->all_shall_stop = true;
-		pthread_mutex_unlock(&philo->data->m_someone_died);
+		pthread_mutex_unlock(&philo->data->read_all_shall_stop);
 		philo_dead(philo);
 		return (true);
 	}
@@ -42,16 +42,16 @@ static bool	check_eat_count(t_philo *philo)
 	pthread_mutex_lock(&philo->read_eat_count);
 	eat_count = philo->eat_count;
 	pthread_mutex_unlock(&philo->read_eat_count);
-	if (eat_count == philo->data->max_eat_count)
+	if (eat_count >= philo->data->max_eat_count)
 		return (true);
 	return (false);
 }
 
 static bool	stop_all(t_philo_data *data)
 {
-	pthread_mutex_lock(&data->m_someone_died);
+	pthread_mutex_lock(&data->read_all_shall_stop);
 	data->all_shall_stop = true;
-	pthread_mutex_unlock(&data->m_someone_died);
+	pthread_mutex_unlock(&data->read_all_shall_stop);
 	return (true);
 }
 

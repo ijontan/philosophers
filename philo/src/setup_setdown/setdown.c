@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 00:21:10 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 00:30:21 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 14:34:08 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	destroy_all(t_philo_data *data)
 	while (i < data->num_of_philo)
 		pthread_mutex_destroy(&data->forks[i++]);
 	pthread_mutex_destroy(&data->print);
-	pthread_mutex_destroy(&data->m_someone_died);
+	pthread_mutex_destroy(&data->read_all_shall_stop);
 	free(data->thread);
 	free(data->forks);
 	free(data->philos);

@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 01:20:29 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 00:08:47 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 14:33:25 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ bool	check_dead(t_philo *philo)
 	bool	all_shall_stop;
 	bool	died;
 
-	pthread_mutex_lock(&philo->data->m_someone_died);
+	pthread_mutex_lock(&philo->data->read_all_shall_stop);
 	all_shall_stop = philo->data->all_shall_stop;
-	pthread_mutex_unlock(&philo->data->m_someone_died);
+	pthread_mutex_unlock(&philo->data->read_all_shall_stop);
 	if (all_shall_stop)
 		return (true);
 	pthread_mutex_lock(&philo->read_dead);

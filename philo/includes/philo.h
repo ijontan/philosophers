@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:00:01 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 00:29:55 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 14:33:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philo_data
 	int				max_eat_count;
 	int				num_of_philo;
 	bool			all_shall_stop;
-	pthread_mutex_t	m_someone_died;
+	pthread_mutex_t	read_all_shall_stop;
 	struct timeval	start_time;
 	pthread_t		*thread;
 	pthread_mutex_t	*forks;

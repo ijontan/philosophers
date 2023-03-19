@@ -17,14 +17,12 @@ void	philo_take_fork(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->print));
 	if (PRETTY)
 		printf("%07i %i%s has taken a fork%s\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id,
-				"\033[1;34m",
-				"\033[0m");
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id, "\033[1;34m", "\033[0m");
 	else
 		printf("%07i %i has taken a fork\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id);
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id);
 	pthread_mutex_unlock(&(philo->data->print));
 }
 
@@ -33,14 +31,12 @@ void	philo_take_another_fork(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->print));
 	if (PRETTY)
 		printf("%07i %i%s has taken another fork%s\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id,
-				"\033[1;32m",
-				"\033[0m");
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id, "\033[1;32m", "\033[0m");
 	else
 		printf("%07i %i has taken a fork\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id);
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id);
 	pthread_mutex_unlock(&(philo->data->print));
 }
 
@@ -49,14 +45,12 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->print));
 	if (PRETTY)
 		printf("%07i %i%s eating like nobody's business%s🤤👍🍔\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id,
-				"\033[1;33m",
-				"\033[0m");
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id, "\033[1;33m", "\033[0m");
 	else
 		printf("%07i %i is eating\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id);
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id);
 	pthread_mutex_unlock(&(philo->data->print));
 }
 
@@ -65,14 +59,12 @@ void	philo_sleep(t_philo *philo)
 	pthread_mutex_lock(&(philo->data->print));
 	if (PRETTY)
 		printf("%07i %i%s is sleeping%s😴😴\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id,
-				"\033[1;36m",
-				"\033[0m");
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id, "\033[1;36m", "\033[0m");
 	else
 		printf("%07i %i is sleeping\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id);
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id);
 	pthread_mutex_unlock(&(philo->data->print));
 }
 
@@ -80,13 +72,14 @@ void	philo_think(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->data->print));
 	if (PRETTY)
-		printf("%07i %i%s is thinking about how his life is completely meaningless%s\n",
-				get_time_diff(philo->data->start_time, philo->current_time),
-				philo->id,
-				"\033[1;37m",
-				"\033[0m");
+	{
+		printf("%07i %i%s is thinking about ",
+			get_time_diff(philo->data->start_time, philo->current_time),
+			philo->id, "\033[1;37m");
+		printf("how his life is completely meaningless%s\n", "\033[0m");
+	}
 	else
 		printf("%07i %i is thinking\n", get_time_diff(philo->data->start_time,
-					philo->current_time), philo->id);
+				philo->current_time), philo->id);
 	pthread_mutex_unlock(&(philo->data->print));
 }
