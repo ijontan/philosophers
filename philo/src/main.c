@@ -6,13 +6,13 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:59:27 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 14:37:05 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 14:52:38 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	check_dead(t_philo *philo)
+static bool	check_any_dead(t_philo *philo)
 {
 	struct timeval	current_time;
 	struct timeval	last_eat;
@@ -66,7 +66,7 @@ bool	check_routine(t_philo_data *data)
 		i = 0;
 		while (i < data->num_of_philo)
 		{
-			if (check_dead(&data->philos[i]))
+			if (check_any_dead(&data->philos[i]))
 				return (true);
 			if (data->max_eat_count != -1 && check_eat_count(&data->philos[i]))
 				finished_eating++;
@@ -85,7 +85,16 @@ int	main(int ac, char const **av)
 	t_philo_data	data;
 
 	if (ac != 5 && ac != 6)
+	{
+		printf("%sError: Wrong number of arguments%s\n", "\033[1;31m",
+			"\033[0m");
 		return (1);
+	}
+	if (!validate_input(ac, (char **)av))
+	{
+		printf("%sError: Invalid input%s\n", "\033[1;31m", "\033[0m");
+		return (1);
+	}
 	philo_data_init(&data, ac, av);
 	create_philosophers(&data);
 	create_threads(&data);

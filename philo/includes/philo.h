@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:00:01 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 14:33:42 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 14:51:50 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_philo
 	t_philo_data	*data;
 }					t_philo;
 
+bool				validate_input(int ac, char **av);
+
 /* ---------------------------------- print --------------------------------- */
 void				philo_take_fork(t_philo *philo);
 void				philo_take_another_fork(t_philo *philo);
@@ -59,6 +61,7 @@ void				philo_sleep(t_philo *philo);
 void				philo_think(t_philo *philo);
 void				philo_dead(t_philo *philo);
 /* --------------------------------- routine -------------------------------- */
+bool				check_dead(t_philo *philo);
 void				*routine(void *val);
 /* ------------------------------ setup_setdown ----------------------------- */
 void				philo_data_init(t_philo_data *data, int ac,
