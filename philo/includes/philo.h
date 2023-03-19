@@ -6,17 +6,20 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 16:00:01 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 14:51:50 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/19 18:17:54 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-# include "libft.h"
 # include <pthread.h>
 # include <stdbool.h>
+# include <stdint.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 # ifndef PRETTY
 #  define PRETTY 0
@@ -73,5 +76,11 @@ void				join_all(t_philo_data *data);
 void				destroy_all(t_philo_data *data);
 /* ---------------------------------- time ---------------------------------- */
 int					get_time_diff(struct timeval start, struct timeval end);
+/* ---------------------------------- utils --------------------------------- */
+int					ft_atoi(const char *str);
+void				*ft_bzero(void *a, size_t n);
+void				*ft_calloc(size_t count, size_t size);
+int					ft_isdigit(int c);
+char				*ft_strchr(const char *str, int c);
 
 #endif

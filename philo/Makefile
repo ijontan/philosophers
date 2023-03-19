@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/19 01:33:14 by itan             ###   ########.fr        #
+#    Updated: 2023/03/19 18:17:05 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,6 @@ CFLAGS	= -Wall -Werror -Wextra
 RM		= rm -f
 INC		= $(addprefix -I , $(shell find ../ -type d -name includes))
 
-LIBDIR	= ../libft
-LIB		= -L$(LIBDIR) -lft
-LIBNAME	= libft.a
 # this is for debugging
 DNAME	= debug.out
 # DDIR	= test
@@ -70,18 +67,16 @@ $(DDIR)/%.o:	$(DDIR)/%.c
 				@printf "$(YELLOW)$(BRIGHT)Generating %25s\t$(NORMAL)%40s\r" "$(NAME) debug objects..." $@
 				@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-$(NAME)::	$(LIBDIR)/$(LIBNAME) $(OBJ) 
+$(NAME)::	$(OBJ) 
 			@printf "\n$(MAGENTA)$(BRIGHT)Compiling $(NAME)...          \n"
-			@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $(NAME) $(LIB)
+			@$(CC) $(CFLAGS) $(OBJ) $(INC) -o $(NAME)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
-$(DNAME):	$(SRC) $(DSRC) $(LIBDIR)/$(LIBNAME)
+$(DNAME):	$(SRC) $(DSRC)
 			@printf "\n$(MAGENTA)Compiling $(DNAME) for $(NAME)...          \n"
-			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(SRC) $(DSRC) -o $(DNAME) $(LIB) 
+			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(SRC) $(DSRC) -o $(DNAME)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
-$(LIBDIR)/$(LIBNAME):
-		@make -C $(LIBDIR) --no-print-directory
 
 debug:	$(DNAME)
 
