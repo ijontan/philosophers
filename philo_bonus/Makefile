@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/19 23:44:16 by itan             ###   ########.fr        #
+#    Updated: 2023/03/19 23:54:16 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,9 +78,6 @@ $(DNAME):	$(SRC) $(DSRC)
 			@$(CC) $(CFLAGS) $(DFLAGS) $(INC) $(SRC) $(DSRC) -o $(DNAME)
 			@printf "$(GREEN)COMPLETE!!\n\n"
 
-$(LIBDIR)/$(LIBNAME):
-		@make -C $(LIBDIR) --no-print-directory
-
 debug:	$(DNAME)
 
 all::	$(NAME)
@@ -91,13 +88,11 @@ pretty::	all
 
 clean:
 		@printf "$(RED)$(BRIGHT)Removing $(NAME) objects...\n$(NORMAL)"
-		@make clean -C $(LIBDIR) --no-print-directory
 		@$(RM) $(OBJ) $(DOBJ)
 		@$(RM) -r $(OBJ_DIR)
 
 fclean:	clean
 		@printf "$(RED)$(BRIGHT)Deleting $(NAME) and $(DNAME)...\n\n$(NORMAL)"
-		@make fclean -C $(LIBDIR) --no-print-directory
 		@$(RM) $(NAME)
 		@$(RM) $(DNAME)
 
