@@ -6,7 +6,7 @@
 #    By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 20:55:16 by itan              #+#    #+#              #
-#    Updated: 2023/03/19 18:17:05 by itan             ###   ########.fr        #
+#    Updated: 2023/03/20 14:18:41 by itan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,13 +88,11 @@ pretty::	all
 
 clean:
 		@printf "$(RED)$(BRIGHT)Removing $(NAME) objects...\n$(NORMAL)"
-		@make clean -C $(LIBDIR) --no-print-directory
 		@$(RM) $(OBJ) $(DOBJ)
 		@$(RM) -r $(OBJ_DIR)
 
 fclean:	clean
 		@printf "$(RED)$(BRIGHT)Deleting $(NAME) and $(DNAME)...\n\n$(NORMAL)"
-		@make fclean -C $(LIBDIR) --no-print-directory
 		@$(RM) $(NAME)
 		@$(RM) $(DNAME)
 
