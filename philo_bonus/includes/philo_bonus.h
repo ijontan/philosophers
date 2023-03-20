@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:33:34 by itan              #+#    #+#             */
-/*   Updated: 2023/03/19 23:50:34 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/20 21:49:53 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,16 @@ typedef struct s_philo
 }					t_philo;
 
 bool				validate_input(int ac, char **av);
-
+void				kill_all_child(pid_t *pids, int num);
+/* -------------------------------- printing -------------------------------- */
+void				philo_dead(t_philo *philo);
+void				philo_take_fork(t_philo *philo);
+void				philo_take_another_fork(t_philo *philo);
+void				philo_eat(t_philo *philo);
+void				philo_sleep(t_philo *philo);
+void				philo_think(t_philo *philo);
+/* ---------------------------------- time ---------------------------------- */
+int					get_time_diff(struct timeval start, struct timeval end);
 /* ---------------------------------- utils --------------------------------- */
 int					ft_atoi(const char *str);
 void				*ft_bzero(void *a, size_t n);
