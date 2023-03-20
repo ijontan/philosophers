@@ -6,13 +6,14 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:33:34 by itan              #+#    #+#             */
-/*   Updated: 2023/03/20 21:49:53 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/21 01:13:03 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 # include <fcntl.h>
+# include <pthread.h>
 # include <semaphore.h>
 # include <signal.h>
 # include <stdbool.h>
@@ -23,6 +24,10 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+# ifndef PRETTY
+#  define PRETTY 0
+# endif
+
 typedef struct s_philo_data
 {
 	int				sleep_ms;
@@ -32,7 +37,7 @@ typedef struct s_philo_data
 	int				num_of_philo;
 	sem_t			*all_shall_stop;
 	sem_t			*forks;
-	sem_t			*eat;
+	sem_t			*check_all_eaten;
 	struct timeval	start_time;
 	struct s_philo	*philos;
 	pid_t			*pids;
@@ -49,7 +54,11 @@ typedef struct s_philo
 }					t_philo;
 
 bool				validate_input(int ac, char **av);
-void				kill_all_child(pid_t *pids, int num);
+/* ------------------------------ child_process ----------------------------- */
+void				child_process(t_philo *philo_initial);
+/* --------------------------------- monitor -------------------------------- */
+void				*monitor_dead(void *arg);
+void				*check_all_eaten(void *arg);
 /* -------------------------------- printing -------------------------------- */
 void				philo_dead(t_philo *philo);
 void				philo_take_fork(t_philo *philo);

@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	philo_take_fork(t_philo *philo)
 {
+	sem_wait(philo->read);
+	gettimeofday(&philo->current_time, NULL);
 	if (PRETTY)
 		printf("%07i %i%s has taken a fork%s\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
@@ -22,10 +24,13 @@ void	philo_take_fork(t_philo *philo)
 		printf("%07i %i has taken a fork\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
 			philo->id);
+	sem_post(philo->read);
 }
 
 void	philo_take_another_fork(t_philo *philo)
 {
+	sem_wait(philo->read);
+	gettimeofday(&philo->current_time, NULL);
 	if (PRETTY)
 		printf("%07i %i%s has taken another fork%s\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
@@ -34,10 +39,13 @@ void	philo_take_another_fork(t_philo *philo)
 		printf("%07i %i has taken a fork\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
 			philo->id);
+	sem_post(philo->read);
 }
 
 void	philo_eat(t_philo *philo)
 {
+	sem_wait(philo->read);
+	gettimeofday(&philo->current_time, NULL);
 	if (PRETTY)
 		printf("%07i %i%s eating like nobody's business%s🤤👍🍔\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
@@ -46,10 +54,13 @@ void	philo_eat(t_philo *philo)
 		printf("%07i %i is eating\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
 			philo->id);
+	sem_post(philo->read);
 }
 
 void	philo_sleep(t_philo *philo)
 {
+	sem_wait(philo->read);
+	gettimeofday(&philo->current_time, NULL);
 	if (PRETTY)
 		printf("%07i %i%s is sleeping%s😴😴\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
@@ -58,10 +69,13 @@ void	philo_sleep(t_philo *philo)
 		printf("%07i %i is sleeping\n",
 			get_time_diff(philo->data->start_time, philo->current_time),
 			philo->id);
+	sem_post(philo->read);
 }
 
 void	philo_think(t_philo *philo)
 {
+	sem_wait(philo->read);
+	gettimeofday(&philo->current_time, NULL);
 	if (PRETTY)
 	{
 		printf("%07i %i%s is thinking about ",
@@ -72,4 +86,5 @@ void	philo_think(t_philo *philo)
 	else
 		printf("%07i %i is thinking\n", get_time_diff(philo->data->start_time,
 				philo->current_time), philo->id);
+	sem_post(philo->read);
 }
