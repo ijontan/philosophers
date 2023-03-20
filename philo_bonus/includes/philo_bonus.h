@@ -6,7 +6,7 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 17:33:34 by itan              #+#    #+#             */
-/*   Updated: 2023/03/21 01:13:03 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/21 02:44:50 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ void				philo_take_another_fork(t_philo *philo);
 void				philo_eat(t_philo *philo);
 void				philo_sleep(t_philo *philo);
 void				philo_think(t_philo *philo);
+/* ------------------------------ setup_setdown ----------------------------- */
+void				init_philo_data(t_philo_data *data, int ac,
+						char const **av);
+void				create_philosophers(t_philo_data *data);
+void				detroy_philo_data(t_philo_data *data);
+void				destroy_philos(t_philo_data *data);
 /* ---------------------------------- time ---------------------------------- */
 int					get_time_diff(struct timeval start, struct timeval end);
 /* ---------------------------------- utils --------------------------------- */

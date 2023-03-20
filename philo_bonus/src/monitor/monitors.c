@@ -6,11 +6,18 @@
 /*   By: itan <itan@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 22:54:46 by itan              #+#    #+#             */
-/*   Updated: 2023/03/21 02:33:52 by itan             ###   ########.fr       */
+/*   Updated: 2023/03/21 02:48:42 by itan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+static void	*send_dead(t_philo *philo)
+{
+	philo_dead(philo);
+	sem_post(philo->data->all_shall_stop);
+	return (NULL);
+}
 
 void	*monitor_dead(void *arg)
 {
@@ -27,17 +34,12 @@ void	*monitor_dead(void *arg)
 		gettimeofday(&current_time, NULL);
 		time_diff = get_time_diff(philo->last_eat, current_time);
 		if (time_diff > philo->data->die_time_ms)
-		{
-			philo_dead(philo);
-			sem_post(philo->data->all_shall_stop);
-			return (NULL);
-		}
+			return (send_dead(philo));
 		if (philo->data->max_eat_count != -1 && !sent_eaten
 			&& philo->eat_count >= philo->data->max_eat_count)
 		{
 			sent_eaten = true;
 			sem_post(philo->data->check_all_eaten);
-			return (NULL);
 		}
 		sem_post(philo->read);
 		usleep(1000);
