@@ -7,8 +7,8 @@
   - [About ](#about-)
     - [Prerequisites](#prerequisites)
     - [Installing](#installing)
-      - [parameters](#parameters)
   - [Usage ](#usage-)
+      - [parameters](#parameters)
 
 ## About <a name = "about"></a>
 
@@ -28,6 +28,9 @@ clone the projects
 ```sh
 git clone https://github.com/ijontan/philosophers.git
 ```
+
+## Usage <a name = "usage"></a>
+
 #### parameters
 1. n - number of philosophers
 2. t - time before a philosopher starve to death
@@ -44,7 +47,3 @@ run bonus
 ```sh
 cd philo_bonus && make && ./philo_bonus {n} {t} {e} {s} {m}
 ```
-
-## Usage <a name = "usage"></a>
-
-Add notes about how to use the system.
